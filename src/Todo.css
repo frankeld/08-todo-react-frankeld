@@ -1,0 +1,59 @@
+body {
+  font-family: sans-serif;
+}
+#content {
+  max-width: 600px;
+  height: 500px;
+  margin: 65px auto;
+  box-shadow: 0 10px 18px 5px #888888;
+  border-radius: 10px;
+  border-top: 1px solid #fff;
+  padding-bottom: 76px;
+}
+#header {
+  border-bottom: 1px solid grey;
+}
+h1 {
+  padding-left: 18px;
+}
+input[type=submit] {
+  padding: 10px;
+  border: 1px solid grey;
+  border-radius: 2px;
+}
+.items {
+  overflow-y: auto;
+  height: 442px;
+}
+#itemList {
+  margin-top: 0;
+}
+ul {
+  padding: 5px;
+  border-bottom: 1px solid grey;
+}
+ul li {
+  list-style-type: none;
+  padding: 15px 18px 15px 18px;
+  border-radius: 2px;
+}
+ul li:nth-child(odd) {
+  background: #f9f9f9;
+}
+ul li:hover {
+  background: #ddd;
+}
+.completed {
+  text-decoration: line-through;
+  color: grey;
+}
+button {
+  position: relative;
+  float: right;
+  clear: both;
+  border: 1px solid grey;
+  border-radius: 2px;
+}
+.listItemContent {
+  min-width: 100%;
+}
