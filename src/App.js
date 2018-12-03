@@ -7,6 +7,7 @@ class App extends Component {
     super(props);
     this.addItem = this.addItem.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
+    this.flipItem = this.flipItem.bind(this);
     this.state = {
       error: null,
       isLoaded: false,
@@ -19,8 +20,14 @@ class App extends Component {
     this.setState({items: newItems});
     // console.log(newItem);
   }
-  deleteItem(deleteID) {
-    this.setState({items: this.state.items.filter(currentItem => currentItem['id'] !== deleteID)});
+  deleteItem(eleID) {
+    this.setState({items: this.state.items.filter(currentItem => currentItem['id'] !== eleID)});
+  }
+  flipItem(eleID) {
+    var index = this.state.items.findIndex(function(element) {return element['id'] === eleID});
+    var newItems = this.state.items;
+    newItems[index].completed = !newItems[index].completed;
+    this.setState({items: newItems});
   }
   componentDidMount() {
     fetch("https://api.kraigh.net/todos", {
@@ -51,7 +58,7 @@ class App extends Component {
           <NewTodo items={this.state.items} onItemAdd={this.addItem}/>
         </div>
         <div className="items">
-            <Todo items={this.state.items} onItemDelete={this.deleteItem}/>
+            <Todo items={this.state.items} onItemDelete={this.deleteItem} onItemFlip={this.flipItem}/>
         </div>
       </div>
     );
