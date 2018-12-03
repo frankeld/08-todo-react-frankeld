@@ -15,17 +15,17 @@ class NewTodo extends Component {
   }
 
   handleSubmit(event) {
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("x-api-key", "66d24650014ef29878e637f3b1e42641eee0f334d21ecd8a6aa518ba2c1ce37b");
     var data = JSON.stringify({text: this.state.value});
     fetch('https://api.kraigh.net/todos', {
         method: "POST",
-        headers: myHeaders,
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": "66d24650014ef29878e637f3b1e42641eee0f334d21ecd8a6aa518ba2c1ce37b"
+        },
         body: data
     }) .then(res => res.json())
       .then( response => {
-        console.log('Success:', response);
+        // console.log('Success:', response);
         this.setState({value: ''});
         this.props.onItemAdd(response);
       })

@@ -6,6 +6,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.addItem = this.addItem.bind(this);
+    this.deleteItem = this.deleteItem.bind(this);
     this.state = {
       error: null,
       isLoaded: false,
@@ -17,6 +18,9 @@ class App extends Component {
     newItems.push(newItem);
     this.setState({items: newItems});
     // console.log(newItem);
+  }
+  deleteItem(deleteID) {
+    this.setState({items: this.state.items.filter(currentItem => currentItem['id'] !== deleteID)});
   }
   componentDidMount() {
     fetch("https://api.kraigh.net/todos", {
@@ -47,7 +51,7 @@ class App extends Component {
           <NewTodo items={this.state.items} onItemAdd={this.addItem}/>
         </div>
         <div className="items">
-            <Todo items={this.state.items}/>
+            <Todo items={this.state.items} onItemDelete={this.deleteItem}/>
         </div>
       </div>
     );
