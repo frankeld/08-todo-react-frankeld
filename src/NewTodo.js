@@ -19,15 +19,17 @@ class NewTodo extends Component {
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("x-api-key", "66d24650014ef29878e637f3b1e42641eee0f334d21ecd8a6aa518ba2c1ce37b");
     var data = JSON.stringify({text: this.state.value});
-    fetch("https://api.kraigh.net/todos", {
+    fetch('https://api.kraigh.net/todos', {
         method: "POST",
-        mode: "no-cors",
         headers: myHeaders,
         body: data
     }) .then(res => res.json())
-      .then(response => console.log('Success:', JSON.stringify(response)))
+      .then( response => {
+        console.log('Success:', response);
+        this.setState({value: ''});
+        this.props.onItemAdd(response);
+      })
       .catch(error => console.error('Error:', error));
-    this.setState({value: ''});
     event.preventDefault();
   }
 
