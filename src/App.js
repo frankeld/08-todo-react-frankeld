@@ -8,10 +8,13 @@ class App extends Component {
     this.addItem = this.addItem.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
     this.flipItem = this.flipItem.bind(this);
+    this.sortItemsByStatus = this.sortItemsByStatus.bind(this);
+    this.sortItemsByTime = this.sortItemsByTime.bind(this);
     this.state = {
       error: null,
       isLoaded: false,
-      items: []
+      items: [],
+      sortDirection: false
     };
   }
   addItem(newItem) {
@@ -50,11 +53,33 @@ class App extends Component {
         }
       )
   }
+  sortItemsByStatus() {
+    //from https://stackoverflow.com/questions/1069666/sorting-javascript-object-by-property-value
+    var newItems = this.state.items;
+    if (this.state.sortDirection){
+      newItems.sort((a, b) => (a.completed ? 0 : 1) - (b.completed ? 0 : 1));
+    } else {
+      newItems.sort((b, a) => (a.completed ? 0 : 1) - (b.completed ? 0 : 1));
+    }
+    this.setState({items: newItems, sortDirection: !this.state.sortDirection});
+  }
+  sortItemsByTime() {
+    var newItems = this.state.items;
+    if (this.state.sortDirection) {
+      newItems.sort((a, b) => a.created - b.created);
+    } else {
+      newItems.sort((b, a) => a.created - b.created);
+    }
+    this.setState({items: newItems, sortDirection: !this.state.sortDirection});
+
+  }
   render() {
     return (
       <div id="content">
         <div id="header">
           <h1>To Do</h1>
+          <button type="button" onClick={this.sortItemsByStatus}>Sort By Status</button>
+          <button type="button" onClick={this.sortItemsByTime}>Sort By Time</button>
           <NewTodo items={this.state.items} onItemAdd={this.addItem}/>
         </div>
         <div className="items">
