@@ -5,7 +5,6 @@ class NewTodo extends Component {
   constructor(props) {
     super(props);
     this.state = {value: ''};
-
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -25,9 +24,8 @@ class NewTodo extends Component {
         body: data
     }) .then(res => res.json())
       .then( response => {
-        // console.log('Success:', response);
         this.setState({value: ''});
-        this.props.onItemAdd(response);
+        this.props.changeItems([...this.props.items, response]);
       })
       .catch(error => console.error('Error:', error));
     event.preventDefault();

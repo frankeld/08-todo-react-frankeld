@@ -5,9 +5,7 @@ import NewTodo from './NewTodo';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.addItem = this.addItem.bind(this);
-    this.deleteItem = this.deleteItem.bind(this);
-    this.flipItem = this.flipItem.bind(this);
+    this.changeItems = this.changeItems.bind(this);
     this.sortItemsByStatus = this.sortItemsByStatus.bind(this);
     this.sortItemsByTime = this.sortItemsByTime.bind(this);
     this.state = {
@@ -17,20 +15,8 @@ class App extends Component {
       sortDirection: false
     };
   }
-  addItem(newItem) {
-    var newItems = this.state.items;
-    newItems.push(newItem);
-    this.setState({items: newItems});
-    // console.log(newItem);
-  }
-  deleteItem(eleID) {
-    this.setState({items: this.state.items.filter(currentItem => currentItem['id'] !== eleID)});
-  }
-  flipItem(eleID) {
-    var index = this.state.items.findIndex(function(element) {return element['id'] === eleID});
-    var newItems = this.state.items;
-    newItems[index].completed = !newItems[index].completed;
-    this.setState({items: newItems});
+  changeItems(newTodoList) {
+    this.setState({items: newTodoList});
   }
   componentDidMount() {
     fetch("https://api.kraigh.net/todos", {
@@ -80,10 +66,10 @@ class App extends Component {
           <h1>To Do</h1>
           <button type="button" onClick={this.sortItemsByStatus}>Sort By Status</button>
           <button type="button" onClick={this.sortItemsByTime}>Sort By Time</button>
-          <NewTodo items={this.state.items} onItemAdd={this.addItem}/>
+          <NewTodo items={this.state.items} changeItems={this.changeItems}/>
         </div>
         <div className="items">
-            <Todo items={this.state.items} onItemDelete={this.deleteItem} onItemFlip={this.flipItem}/>
+            <Todo items={this.state.items} changeItems={this.changeItems}/>
         </div>
       </div>
     );

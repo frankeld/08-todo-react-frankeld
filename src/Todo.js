@@ -19,7 +19,7 @@ class Todo extends Component {
         }
       }).then(res => res.json())
       .then(response => {
-        this.props.onItemDelete(eleID);
+        this.props.changeItems(this.props.items.filter(currentItem => currentItem['id'] !== eleID));
       })
       .catch(error => console.error('Error:', error));
   }
@@ -35,7 +35,8 @@ class Todo extends Component {
         body: JSON.stringify(data)
       })
       .then(response => {
-        this.props.onItemFlip(eleID);
+        this.props.items[index].completed = !this.props.items[index].completed;
+        this.props.changeItems(this.props.items);
       })
       .catch(error => console.error('Error:', error));
   }
